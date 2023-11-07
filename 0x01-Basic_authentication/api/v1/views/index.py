@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ Module of Index views
 """
-from flask import jsonify, abort
+from flask import jsonify, make_response
 from api.v1.views import app_views
 
 
@@ -14,14 +14,13 @@ def status() -> str:
     return jsonify({"status": "OK"})
 
 
-# Add a new error handler for 401 status code by calling abort
 @app_views.route('/unauthorized', methods=['GET'], strict_slashes=False)
 def unauthorized() -> str:
     """ GET /api/v1/unauthorized
     Return:
       - abort(401)
     """
-    jsonify(abort(401, description="Unauthorized")), 401
+    return make_response(jsonify({"error": "Unauthorized"}), 401)
 
 
 @app_views.route('/stats/', strict_slashes=False)
