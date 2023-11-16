@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """DB module for defining database interaction with sqlalchemy
 """
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from typing import Type
+from typing import Type, Dict, Any
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
@@ -49,3 +51,24 @@ class DB:
         session.add(new_user)
         session.commit()
         return new_user
+
+    def find_user_by(self, **kwargs: Dict[str, Any]) -> Type[User]:
+        """
+        Returns the firstrow  of users found
+
+        Args:
+            kwargs - search terms
+        Return:
+            list of users
+        """
+        session = self._session
+        try:
+            user = session.query(User).filter_by(**kwargs).one()
+            if user is not None:
+                return user
+            else:
+                print("Not found")
+        except NoResultFound:
+            raise
+        except InvalidRequestError:
+            raise
