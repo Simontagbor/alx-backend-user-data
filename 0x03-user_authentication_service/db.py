@@ -12,7 +12,7 @@ from user import Base, User
 
 class DB:
     """DB class for models
- 
+
     Attributes: _session
                 add_user()
     """
