@@ -12,6 +12,9 @@ from user import Base, User
 
 class DB:
     """DB class for models
+    
+    Attributes: _session
+                add_user()
     """
     def __init__(self) -> None:
         """Initialize a new DB instance"""
