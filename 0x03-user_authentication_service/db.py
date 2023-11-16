@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DB module
+"""DB module for defining database interaction with sqlalchemy
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -10,11 +10,11 @@ from user import Base, User
 
 
 class DB:
-    """DB class
+    """DB class for models
     """
     def __init__(self) -> None:
         """Initialize a new DB instance"""
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
 
@@ -32,7 +32,13 @@ class DB:
 
     def add_user(self, email, hashed_password):
         """
-        returns a User object
+        Adds a User Instance to Database
+
+        Args:
+            email(string) - email of user
+            hashed_password(string) - password of user
+        Return:
+            User instance(object)
         """
         new_user = User(email=email, hashed_password=hashed_password)
         session = self._session
