@@ -72,3 +72,4 @@ class DB:
             raise
         except InvalidRequestError:
             raise
+
