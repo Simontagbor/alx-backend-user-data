@@ -72,3 +72,24 @@ class DB:
             raise
         except InvalidRequestError:
             raise
+
+    def update_user(self, id: int, **kwargs: Dict[str, Any]) -> None:
+        """
+        Locates a user and updates the record
+
+        Args:
+            id(int) - user id
+            **kwargs(str) - value to update with
+        Return:
+            None
+        """
+        session = self._session
+        user = self.find_user_by(id=id)
+        for key, value in kwargs.items():
+            if key == "email":
+                user.email = value
+            elif key == "hashed_password":
+                user.hashed_password == value
+            else:
+                raise ValueError
+        session.commit()
