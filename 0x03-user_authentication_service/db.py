@@ -36,7 +36,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> Type[User]:
+    def add_user(self, email: str, hashed_password: str) -> User:
         """
         Adds a User Instance to Database
 
@@ -52,7 +52,7 @@ class DB:
         session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs: Dict[str, Any]) -> Type[User]:
+    def find_user_by(self, **kwargs: Dict[str, Any]) -> User:
         """
         Returns the firstrow  of users found
 
