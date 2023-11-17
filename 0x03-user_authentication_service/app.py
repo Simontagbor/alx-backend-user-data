@@ -22,7 +22,10 @@ def home():
 @app.route('/users', methods=['POST'])
 def create_user():
     """ this endpoint creates a new user"""
-    data = request.json
+    if request.is_json:
+        data = request.get_json()
+    else:
+        data = request.form
     email = data.get('email')
     password = data.get('password')
     try:
@@ -30,7 +33,7 @@ def create_user():
         return jsonify({"message": "email already registered"}), 400
     except NoResultFound:
         AUTH.register_user(email, password)
-    return jsonify({"email": f"{email}", "message": "user created"})
+    return jsonify({"email": f"{email}", "message": "user created"}), 200
 
 
 if __name__ == "__main__":
