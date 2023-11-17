@@ -4,6 +4,8 @@ Module to define authentication class
 """
 from user import User
 from db import DB
+from sqlalchemy.orm.exc import NoResultFound
+
 import bcrypt
 
 
@@ -27,19 +29,20 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def _hash_password(self, password: str) -> bytes:
-        """
-        hashes a password with bcrypt
+    def register_user(self, email: str, password: str) -> User:
+        """Registers a user
 
         Args:
-            password(str) - password to be hashed
-        Return:
-            hashed_password(bytes)
-        """
-        salt = bcrypt.gensalt()
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
-        return hashed_password
+            email(str)
+            password(str)
 
-    def register_user(self, user) -> User:
-        """Registers a user"""
-        pass
+        Return:
+                New user instance
+        """
+        try:
+            self._db.find_user_by(email=email)
+            raise ValueError(f"{email} already exists")
+        except NoResultFound:
+            hashed_password = _hash_password(password)
+            new_user = self._db.add_user(email, hashed_password)
+        return new_user
