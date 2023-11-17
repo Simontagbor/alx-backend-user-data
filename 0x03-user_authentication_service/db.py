@@ -73,7 +73,7 @@ class DB:
         except InvalidRequestError:
             raise
 
-    def update_user(self, id: int, **kwargs: Dict[str, Any]) -> None:
+    def update_user(self, user_id: int, **kwargs: Dict[str, Any]) -> None:
         """
         Locates a user and updates the record
 
@@ -84,7 +84,7 @@ class DB:
             None
         """
         session = self._session
-        user = self.find_user_by(id=id)
+        user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
             if key == "email":
                 user.email = value
