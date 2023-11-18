@@ -86,9 +86,9 @@ def logout(self, session_id: str):
     try:
         user = AUTH.get_user_from_session_id(session_id)
         AUTH.destroy_session(user.id)
-        return redirect(url_for('/'))
+        return redirect(url_for('home'))
     except NoResultFound:
-        return response 403
+        return response, 403
 
 
 if __name__ == "__main__":
