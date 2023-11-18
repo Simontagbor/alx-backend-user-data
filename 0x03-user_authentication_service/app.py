@@ -70,10 +70,10 @@ def login():
 
 
 @app.route('/sessions', methods=['DELETE'])
-def logout(self, session_id: str):
+def logout()
     """Log user out
     Arg:
-        session_id(str)
+        None
     Return:
         None
     """
@@ -81,14 +81,15 @@ def logout(self, session_id: str):
         data = request.get_json()
     else:
         data = request.form
-    session_id = data.get('session_id')
+    session_id = data.cookies.get('session_id')
     response = make_response()
     try:
         user = AUTH.get_user_from_session_id(session_id)
         AUTH.destroy_session(user.id)
-        return redirect(url_for('home'))
+        response = redirect(url_for('home'))
     except NoResultFound:
-        return response, 403
+        response.status_code = 403
+    return response
 
 
 if __name__ == "__main__":
