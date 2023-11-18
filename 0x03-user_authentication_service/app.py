@@ -54,11 +54,10 @@ def login():
         if AUTH.valid_login(email, password):
             session_id = AUTH.create_session(email)
             payload = {"email": f"{email}", "message": "logged in"}
-            response = make_response(str(payload))
+            response = make_response(payload)
             response.set_cookie('session_id', session_id)
             return response, 200
         else:
-            print("email or password wrong")
             abort(401)
     except NoResultFound:
         abort(401)
