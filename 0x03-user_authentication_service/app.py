@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Defines a simple Flask Application"""
 
-from flask import request, Flask, jsonify, make_response, abort
+from flask import request
+from flask import Flask
+from flask import jsonify
+from flask import make_response
+from flask import abort
+from flask import redirect
+from flask import url_for
 from auth import Auth
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -61,6 +67,28 @@ def login():
             abort(401)
     except NoResultFound:
         abort(401)
+
+
+@app.route('/sessions', methods=['DELETE'])
+def logout(self, session_id: str):
+    """Log user out
+    Arg:
+        session_id(str)
+    Return:
+        None
+    """
+    if request.is_json:
+        data = request.get_json()
+    else:
+        data = request.form
+    session_id = data.get('session_id')
+    response = make_response()
+    try:
+        user = AUTH.get_user_from_session_id(session_id)
+        AUTH.destroy_session(user.id)
+        return redirect(url_for('/'))
+    except NoResultFound:
+        return response 403
 
 
 if __name__ == "__main__":
