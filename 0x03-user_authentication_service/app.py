@@ -70,7 +70,7 @@ def login():
 
 
 @app.route('/sessions', methods=['DELETE'])
-def logout()
+def logout():
     """Log user out
     Arg:
         None
