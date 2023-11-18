@@ -5,7 +5,7 @@ Module to define authentication class
 from user import User
 from db import DB
 from sqlalchemy.orm.exc import NoResultFound
-
+from uuid import uuid4
 import bcrypt
 
 
@@ -21,6 +21,12 @@ def _hash_password(password: str) -> bytes:
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
     return hashed_password
+
+
+def _generate_uuid() -> str:
+    """Generates a uuid and retuns a string representation of uuid"""
+    random_id = uuid4()
+    return str(random_id)
 
 
 class Auth:
