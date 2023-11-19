@@ -84,6 +84,7 @@ def logout():
         AUTH.destroy_session(user.id)
         response = redirect(url_for('home'))
     except NoResultFound:
+        response.set_cookie('session_id', 'bad')
         response.status_code = 403
     return response
 
