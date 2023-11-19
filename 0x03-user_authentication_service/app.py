@@ -77,11 +77,7 @@ def logout():
     Return:
         None
     """
-    if request.is_json:
-        data = request.get_json()
-    else:
-        data = request.form
-    session_id = data.cookies.get('session_id')
+    session_id = request.cookies.get('session_id')
     response = make_response()
     try:
         user = AUTH.get_user_from_session_id(session_id)
