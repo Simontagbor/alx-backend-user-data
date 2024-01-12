@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""This module contains the RedactingFormatter class."""
 import re
 import logging
 from typing import List
