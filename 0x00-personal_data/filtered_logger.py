@@ -7,10 +7,8 @@ from typing import List
 def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
     """ Redacting sensitive info in logs """
     for field in fields:
-        message = re.sub(rf'{field}=.+?{separator}',
-                         f'{field}={redaction}{separator}', message)
+        message = re.sub(rf'{field}=[^;]*', f'{field}={redaction}', message)
     return message
-
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class """
@@ -27,4 +25,4 @@ class RedactingFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         record.msg = filter_datum(self.fields, self.REDACTION,
                                   record.msg, self.SEPARATOR)
-        return record.msg
+        return super().format(record)
