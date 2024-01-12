@@ -2,7 +2,10 @@
 """This module contains the RedactingFormatter class."""
 import re
 import logging
+import os
 from typing import List, Tuple
+# import python mysql connector module
+import mysql.connector
 
 PII_FIELDS: Tuple[str, ...] = ("name", "email", "phone", "ssn", "password")
 
@@ -30,6 +33,16 @@ def get_logger() -> logging.Logger:
     logger.addHandler(file_handler)
 
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Returns a connector to a MySQL database."""
+    connector = mysql.connector.connect(
+        user=os.environ.get("PERSONAL_DATA_DB_USERNAME", "root"),
+        password=os.environ.get("PERSONAL_DATA_DB_PASSWORD", ""),
+        host=os.environ.get("PERSONAL_DATA_DB_HOST", "localhost"),
+        database=os.environ.get("PERSONAL_DATA_DB_NAME"))
+    return connector
 
 
 class RedactingFormatter(logging.Formatter):
