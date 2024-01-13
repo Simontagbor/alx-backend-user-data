@@ -49,13 +49,5 @@ class Auth:
         Return:
             - None
         """
-        if request is None:
+        
         return None
-        authorization_header = request.headers.get('Authorization', None)
-        if authorization_header is None:
-            return None
-        try:
-            return self.user_from_header(authorization_header)
-        except Exception:
-            return None
-            return None

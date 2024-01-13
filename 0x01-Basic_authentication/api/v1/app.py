@@ -35,9 +35,6 @@ def before_request() -> None:
         abort(403)
     return
 
-@app.errorhandler(401)
-def unauthorized(error):
-    return jsonify({"error": "unauthorized"}), 401
 
 @app.errorhandler(404)
 def not_found(error) -> str:
