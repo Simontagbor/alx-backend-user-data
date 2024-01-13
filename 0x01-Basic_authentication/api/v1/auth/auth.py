@@ -8,6 +8,7 @@ from os import getenv
 
 
 class Auth:
+    """Handles authentication for users"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Require auth.
 
