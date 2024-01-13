@@ -14,7 +14,8 @@ class Auth:
 
         Args:
             - path: A string representing the path.
-            - excluded_paths: A list of strings representing the excluded paths.
+            - excluded_paths: A list of strings
+            representing the excluded paths.
 
         Return:
             - False
