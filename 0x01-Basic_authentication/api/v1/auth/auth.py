@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 defines a class to manage the API authentication
 """
@@ -7,44 +8,31 @@ from os import getenv
 
 
 class Auth:
-    """Auth class
-
-    Attributes:
-        - allowed: list of strings
-    """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """require_auth
+        """Require auth.
 
         Args:
-            - path: string
-            - excluded_paths: list of strings
+            - path: A string representing the path.
+            - excluded_paths: A list of strings representing the excluded paths.
 
         Return:
-            - True if path is not in excluded_paths
+            - False
         """
-        if path is None or excluded_paths is None or excluded_paths == []:
-            return True
-        if path[-1] != '/':
-            path += '/'
-        if path in excluded_paths:
-            return False
-        return True
+        return False
 
     def authorization_header(self, request=None) -> str:
-        """authorization_header
+        """Authorization header.
 
         Args:
             - request: flask request object
 
         Return:
-            - None or request.headers.get('Authorization')
+            - None
         """
-        if request is None:
-            return None
-        return request.headers.get('Authorization')
+        return request.headers.get('Authorization') if request else None
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """current_user
+        """Current user.
 
         Args:
             - request: flask request object
