@@ -1,4 +1,4 @@
-#!/bin/usr/env python3
+#!/usr/bin/env python3
 """Basic auth class"""
 from api.v1.auth.auth import Auth
 from models.user import User
