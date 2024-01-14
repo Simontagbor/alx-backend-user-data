@@ -23,7 +23,7 @@ class Auth:
         """
         if path is None or excluded_paths is None or len(excluded_paths) == 0:
             return True
-    
+
         for excluded_path in excluded_paths:
             if fnmatch.fnmatch(path, excluded_path):
                 return False
